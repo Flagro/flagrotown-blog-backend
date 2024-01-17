@@ -24,7 +24,7 @@ def login():
 @auth_bp.route('/authorize')
 def authorize():
     token = oauth.google.authorize_access_token()
-    resp = oauth.google.get('userinfo')
+    resp = oauth.google.get('userinfo', token=token)
     user_info = resp.json()
     user = find_or_create_user(user_info['email'], user_info['name'])
 
