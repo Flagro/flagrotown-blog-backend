@@ -4,3 +4,4 @@ Authlib
 flask-cors
 Flask-SQLAlchemy
 Flask-Migrate
+python-dotenv
