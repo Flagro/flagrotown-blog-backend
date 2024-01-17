@@ -5,5 +5,5 @@ The backend is written in Flask with 3 microservices:
 - auth service for OAuth2 with google
     - implemented with Authlib library
 - blog posts service for managing blog texts and images
-    - implemented with PostgreSQL, SQLAlchemy, AWS S3 + Boto3
+    - implemented with PostgreSQL, SQLAlchemy, AWS S3 + Boto3 and GitPython
 - blog metrics service for mangaing upvotes/comments
