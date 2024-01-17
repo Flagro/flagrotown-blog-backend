@@ -13,11 +13,19 @@ def create_app(test_config=None):
     :return: A `Flask` application instance
     """
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SESSION_TYPE'] = 'sqlalchemy'
-    app.config["EXTERNAL_API_URL"] = os.environ.get("EXTERNAL_API_URL")
+    app.config.from_mapping(
+        SECRET_KEY=os.environ.get('SECRET_KEY'),
+        SQLALCHEMY_DATABASE_URI="{}://{}:{}@{}:{}/{}".format(
+            os.environ.get('DB_ENGINE'),
+            os.environ.get('DB_USER'),
+            os.environ.get('DB_PASSWORD'),
+            os.environ.get('DB_HOST'),
+            os.environ.get('DB_PORT'),
+            os.environ.get('DB_NAME')
+        ),
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        SESSION_TYPE='sqlalchemy'
+    )
     if test_config:
         app.config.update(test_config)
     _register_blueprints(app)
