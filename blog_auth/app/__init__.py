@@ -2,7 +2,6 @@ import os
 
 from flask import Flask
 from flask_session import Session
-from flask.cli import load_dotenv
 from flask_cors import CORS
 from .db import initialize_db
 from .auth import initialize_auth
@@ -14,7 +13,6 @@ def create_app(test_config=None):
     :return: A `Flask` application instance
     """
     app = Flask(__name__)
-    load_dotenv(".env")
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
