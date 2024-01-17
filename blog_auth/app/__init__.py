@@ -2,7 +2,6 @@ import os
 
 from flask import Flask
 from flask import request, abort
-from flask_session import Session
 from flask_cors import CORS
 from .db import initialize_db
 from .auth import initialize_auth
@@ -48,7 +47,6 @@ def create_app(test_config=None):
     initialize_db(app)
     initialize_auth(app)
     check_allowed_hosts(app)
-    Session(app)
     CORS(app, supports_credentials=True)
 
     return app
