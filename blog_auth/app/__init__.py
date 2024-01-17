@@ -6,9 +6,7 @@ from flask.cli import load_dotenv
 from flask_cors import CORS
 from .db import initialize_db
 from .auth import initialize_auth
-from .views import (
-    auth_bp,
-)
+from .views.auth import auth_bp
 
 
 def create_app(test_config=None):
