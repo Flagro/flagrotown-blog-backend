@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  auth_service:
+    build: ./auth_service
+    command: flask run --host=0.0.0.0
+    volumes:
+      - ./auth_service:/app
