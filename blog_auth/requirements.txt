@@ -1,3 +1,5 @@
+gunicorn
 Flask
 Authlib
 flask-cors
+Flask-SQLAlchemy
