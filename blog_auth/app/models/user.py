@@ -15,4 +15,4 @@ class User(db.Model):
         return user    
 
     def __repr__(self):
-        return '<User %r>' % self.email
+        return f"<User id={self.id}, email='{self.email}'>"
