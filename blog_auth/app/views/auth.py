@@ -3,7 +3,7 @@ from auth_service.app import oauth, db
 from auth_service.models.user import User, db
 
 
-auth = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth_bp', __name__)
 
 
 def find_or_create_user(email, name):
@@ -15,12 +15,13 @@ def find_or_create_user(email, name):
     return user
 
 
-@auth.route('/login')
+@auth_bp.route('/login')
 def login():
     redirect_uri = url_for('auth.authorize', _external=True)
     return oauth.google.authorize_redirect(redirect_uri)
 
-@auth.route('/authorize')
+
+@auth_bp.route('/authorize')
 def authorize():
     token = oauth.google.authorize_access_token()
     resp = oauth.google.get('userinfo')
@@ -30,7 +31,8 @@ def authorize():
     session['user_id'] = user.id
     return 'Logged in as: ' + user_info['email']
 
-@auth.route('/logout')
+
+@auth_bp.route('/logout')
 def logout():
     session.pop('user_id', None)
     return redirect(url_for('auth.login'))
