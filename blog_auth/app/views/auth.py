@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, url_for, session
-from auth_service.app import oauth, db
-from auth_service.models.user import User, db
+from ..auth import oauth
+from ..db import db
+from ..models.user import User
 
 
 auth_bp = Blueprint('auth_bp', __name__)
