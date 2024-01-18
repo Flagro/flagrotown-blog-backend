@@ -16,7 +16,17 @@ def blog_repo_update():
 
     deleted_files, added_files = blog_repository.get_diff()
     # Delete all the deleted/updated files
+    for file_path in deleted_files:
+        if file_path.startswith('images/'):
+            pass
+        else:
+            pass
     # Add all the new/updated files
+    for file_path in added_files:
+        if file_path.startswith('images/'):
+            pass
+        else:
+            pass
 
     return 'Update processed', 200
 
