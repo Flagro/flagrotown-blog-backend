@@ -1,5 +1,6 @@
 import boto3
 
+
 class ObjectStorage:
     def __init__(self):
         self.s3_client = None
