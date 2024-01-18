@@ -1,5 +1,5 @@
 from flask import Blueprint, request, abort, current_app
-import git
+from ..blog_repository import blog_repository
 import hmac
 import hashlib
 
@@ -14,8 +14,7 @@ def blog_repo_update():
     if not is_valid_signature(request.data, signature, current_app.config['GITHUB_WEBHOOK_SECRET']):
         abort(403)
 
-    # request the latest commit from the current_app.config['BLOG_GITHUB_REPO_URL']
-    # git diff the latest commit with the last known commit
+    deleted_files, added_files = blog_repository.get_diff()
     # Delete all the deleted/updated files
     # Add all the new/updated files
 

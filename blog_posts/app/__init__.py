@@ -6,6 +6,7 @@ from flask_cors import CORS
 from .db import initialize_db
 from .auth import initialize_auth
 from .object_storage import initialize_object_storage
+from .blog_repository import initialize_blog_repository
 from .views.posts import posts_bp
 from .views.blog_repo import blog_repo_bp
 
@@ -56,6 +57,7 @@ def create_app(test_config=None):
     initialize_db(app)
     initialize_auth(app)
     initialize_object_storage(app)
+    initialize_blog_repository(app)
     check_allowed_hosts(app)
     CORS(app, supports_credentials=True)
 
