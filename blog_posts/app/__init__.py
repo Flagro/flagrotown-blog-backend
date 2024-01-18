@@ -7,6 +7,7 @@ from .db import initialize_db
 from .auth import initialize_auth
 from .object_storage import initialize_object_storage
 from .views.posts import posts_bp
+from .views.blog_repo import blog_repo_bp
 
 
 def check_allowed_hosts(app):
@@ -31,6 +32,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY=os.environ.get('SECRET_KEY'),
         BLOG_GITHUB_WEBHOOK_SECRET=os.environ.get('BLOG_GITHUB_WEBHOOK_SECRET'),
+        BLOG_GITHUB_REPO_URL=os.environ.get('BLOG_GITHUB_REPO_URL'),
         ALLOWED_HOSTS=allowed_hosts,
         SQLALCHEMY_DATABASE_URI="{}://{}:{}@{}:{}/{}".format(
             os.environ.get('DB_ENGINE'),
@@ -62,3 +64,4 @@ def create_app(test_config=None):
 
 def _register_blueprints(app):
     app.register_blueprint(posts_bp, url_prefix="/posts")
+    app.register_blueprint(blog_repo_bp, url_prefix="/posts")
