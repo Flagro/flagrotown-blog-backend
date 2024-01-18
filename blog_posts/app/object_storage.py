@@ -1,3 +1,4 @@
+import os
 import boto3
 
 
@@ -17,12 +18,15 @@ class ObjectStorage:
         self.bucket_name = app.config['AWS_S3_BUCKET_NAME']
 
     def upload_file(self, file_content, filename):
+        filename = os.path.basename(filename)
         return self.s3_client.put_object(Bucket=self.bucket_name, Key=filename, Body=file_content)
 
     def delete_file(self, filename):
+        filename = os.path.basename(filename)
         return self.s3_client.delete_object(Bucket=self.bucket_name, Key=filename)
 
     def generate_file_url(self, filename):
+        filename = os.path.basename(filename)
         return f'{self.s3_client.meta.endpoint_url}/{self.bucket_name}/{filename}'
     
 
