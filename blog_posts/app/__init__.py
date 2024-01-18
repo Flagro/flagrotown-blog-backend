@@ -5,6 +5,7 @@ from flask import request, abort
 from flask_cors import CORS
 from .db import initialize_db
 from .auth import initialize_auth
+from .object_storage import initialize_object_storage
 from .views.auth import auth_bp
 
 
@@ -40,13 +41,19 @@ def create_app(test_config=None):
             os.environ.get('DB_NAME')
         ),
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
-        SESSION_TYPE='sqlalchemy'
+        SESSION_TYPE='sqlalchemy',
+        AWS_REGION=os.environ.get('AWS_REGION'),
+        AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID'),
+        AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY'),
+        AWS_S3_ENDPOINT_URL=os.environ.get('AWS_S3_ENDPOINT_URL'),
+        AWS_S3_BUCKET_NAME=os.environ.get('AWS_S3_BUCKET_NAME'),
     )
     if test_config:
         app.config.update(test_config)
     _register_blueprints(app)
     initialize_db(app)
     initialize_auth(app)
+    initialize_object_storage(app)
     check_allowed_hosts(app)
     CORS(app, supports_credentials=True)
 
