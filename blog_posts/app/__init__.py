@@ -6,7 +6,7 @@ from flask_cors import CORS
 from .db import initialize_db
 from .auth import initialize_auth
 from .object_storage import initialize_object_storage
-from .views.auth import auth_bp
+from .views.posts import posts_bp
 
 
 def check_allowed_hosts(app):
@@ -61,4 +61,4 @@ def create_app(test_config=None):
 
 
 def _register_blueprints(app):
-    app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(posts_bp, url_prefix="/posts")
