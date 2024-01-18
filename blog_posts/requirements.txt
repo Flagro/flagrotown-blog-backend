@@ -1,1 +1,8 @@
+gunicorn
 Flask
+flask-cors
+Flask-SQLAlchemy
+Flask-Migrate
+python-dotenv
+requests
+psycopg2-binary
