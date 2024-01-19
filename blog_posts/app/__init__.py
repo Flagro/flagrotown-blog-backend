@@ -34,6 +34,7 @@ def create_app(test_config=None):
         SECRET_KEY=os.environ.get('SECRET_KEY'),
         BLOG_GITHUB_WEBHOOK_SECRET=os.environ.get('BLOG_GITHUB_WEBHOOK_SECRET'),
         BLOG_GITHUB_REPO_URL=os.environ.get('BLOG_GITHUB_REPO_URL'),
+        BLOG_BASE_COMMIT=os.environ.get('BLOG_BASE_COMMIT'),
         ALLOWED_HOSTS=allowed_hosts,
         SQLALCHEMY_DATABASE_URI="{}://{}:{}@{}:{}/{}".format(
             os.environ.get('DB_ENGINE'),
