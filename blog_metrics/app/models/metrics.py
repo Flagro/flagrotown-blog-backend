@@ -1,12 +1,12 @@
-from sqlalchemy.orm import relationship
 from ..db import db
 
 
-class Metrics(db.Model):
-    __tablename__ = 'metrics'
+class PostAnalytics(db.Model):
+    __tablename__ = 'post_analytics'
 
-    id = db.Column(db.Integer, primary_key=True)
-    metrics = db.Column(db.Text, nullable=False)
+    post_id = db.Column(db.Integer, primary_key=True)
+    views = db.Column(db.Integer, default=0, nullable=False)
+    # Future fields for comments, upvotes, etc.
 
     def __repr__(self):
-        return f'<Metrics for Post {self.id}>'
+        return f'<PostAnalytics {self.post_id}>'
