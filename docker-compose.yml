@@ -8,6 +8,10 @@ services:
     restart: always
     build: ./blog_posts
 
+  metrics_service:
+    restart: always
+    build: ./blog_metrics
+
   nginx:
     restart: always
     image: nginx:1.21
@@ -22,3 +26,4 @@ services:
     depends_on:
       - auth_service
       - posts_service
+      - metrics_service
