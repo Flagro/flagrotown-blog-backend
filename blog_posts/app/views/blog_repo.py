@@ -1,5 +1,9 @@
 from flask import Blueprint, request, abort, current_app
 from ..blog_repository import blog_repository
+from ..object_storage import object_storage
+from ..db import db
+from ..models.post import Post
+from ..models.image import Image
 import hmac
 import hashlib
 
@@ -17,16 +21,46 @@ def blog_repo_update():
     deleted_files, added_files = blog_repository.get_diff()
     # Delete all the deleted/updated files
     for file_path in deleted_files:
-        if file_path.endswith('.md'):
-            pass
-        else:
-            pass
+        try:
+            if file_path.endswith('.md'):
+                # Assuming the file name maps directly to Post ID or some unique identifier
+                post = Post.query.filter_by(id=file_path.strip('.md')).first()
+                if post:
+                    db.session.delete(post)
+                    db.session.commit()
+            else:
+                image = Image.query.filter_by(filename=file_path).first()
+                if image:
+                    image.delete_from_s3()
+                    db.session.delete(image)
+                    db.session.commit()
+        except Exception as e:
+            # Log the exception
+            print(f"Error deleting file {file_path}: {e}")
+
     # Add all the new/updated files
-    for file_path in added_files:
-        if file_path.endswith('.md'):
-            pass
-        else:
-            pass
+    for file_path, file_contents in added_files:
+        try:
+            if file_path.endswith('.md'):
+                file_contents = file_contents.decode('utf-8')
+                # Update or create new Post
+                post = Post.query.filter_by(id=file_path.strip('.md')).first()
+                if not post:
+                    post = Post(id=file_path.strip('.md'), text=file_contents)
+                    db.session.add(post)
+                else:
+                    post.text = file_contents
+                post.update_image_links(object_storage)
+                db.session.commit()
+            else:
+                # Create a new Image and upload to S3
+                new_image = Image(filename=file_path)
+                db.session.add(new_image)
+                db.session.commit()
+                new_image.upload_to_s3(file_contents)
+        except Exception as e:
+            # Log the exception
+            print(f"Error adding/updating file {file_path}: {e}")
 
     return 'Update processed', 200
 
