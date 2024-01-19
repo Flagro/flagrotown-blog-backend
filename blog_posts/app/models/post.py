@@ -18,7 +18,7 @@ class Post(db.Model):
         Update Markdown image references in the post text with Object Storage URLs, 
         while preserving the alt text.
         """
-        pattern = r'(!\[.*?\])\(\.\./images/(.*?)\)'
+        pattern = r'(!\[.*?\])\(\.\.(.*?)\)'
 
         def replace_with_url(match):
             alt_text = match.group(1)
