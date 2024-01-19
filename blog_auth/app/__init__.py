@@ -25,7 +25,7 @@ def create_app(test_config=None):
     if os.environ.get('ENVIRONMENT') == 'development':
         allowed_hosts = ['localhost', '127.0.0.1', '0.0.0.0']
     else:
-        allowed_hosts = ['blog.flagrotown.com']
+        allowed_hosts = ['blog-api.flagrotown.com']
 
     app.config.from_mapping(
         SECRET_KEY=os.environ.get('SECRET_KEY'),

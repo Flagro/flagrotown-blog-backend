@@ -2,7 +2,11 @@ version: '3.8'
 services:
   auth_service:
     restart: always
-    build: ./auth_service
+    build: ./blog_auth
+
+  posts_service:
+    restart: always
+    build: ./blog_posts
 
   nginx:
     restart: always
@@ -17,3 +21,4 @@ services:
       - /etc/ssl/private/flagrotownblog.key:/etc/ssl/private/flagrotownblog.key:ro
     depends_on:
       - auth_service
+      - posts_service
