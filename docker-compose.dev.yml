@@ -2,18 +2,18 @@ version: '3.8'
 services:
   auth_service:
     build: ./blog_auth
-    command: flask run --host=0.0.0.0
+    command: flask run --debug --host=0.0.0.0
     volumes:
       - ./blog_auth:/app
 
   blog_service:
     build: ./blog_posts
-    command: flask run --host=0.0.0.0
+    command: flask run --debug --host=0.0.0.0
     volumes:
       - ./blog_posts:/app
 
   metrics_service:
     build: ./blog_metrics
-    command: flask run --host=0.0.0.0
+    command: flask run --debug --host=0.0.0.0
     volumes:
       - ./blog_metrics:/app
